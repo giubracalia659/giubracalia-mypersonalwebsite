@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="/css/style.css">
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=gfrtLZZRYesOhyvASV5mwHvyKmTC5ayS4vZPE1Fb3QAvWzt-tfOSnUwVSj9w57MX54JBQ6N54U8mp5STMMfT4YDwcM7ksVHXTbbxX377zNL8g23lSlkVhhaUNRiDGRfYGwCLmTfuPRNEN0WKYX3dspk7FQbLRkjt1-o3MT09kB6oWmWA3iOBQbAECAvUL39_b7l5AfYHBd-XnF-CTpeaVG3qIqjK5NC_J21GjTD1e0VeNN3gzmCu7scWCgKOZqFfI4LFph9ONJFKEjp17ICkxmcLv4Nois5PoX8RSrOiRK1F_R8nkNuVl5-PtGfEZ5WGj4LS1uUlcTVvt54IedjdzmNG35BIXyKjKYcxs6YCVrV_zGl31Wkh4GAsCmj1lDk-Kt9gxRUn0arI3tgziAJCfkguV8gctFhvAeTuLHGpo_k76N4REbdCoqDY4ebonDh-fYqoiVwxtojLUDsYv6QBOA" charset="UTF-8"></script>
+<style>
+	.box {
+		width: 100vw;
+		height: 100vh;
+		position: relative;
+		background: lightblue;
+		position: center center;
+		margin: 0;
+
+	}
+	#quadratino {
+		/* width: 40px;
+		height: 40px; */
+		width: fit-content;
+		height: max-content;
+		position: absolute;
+		background-color: red;
+	}
+	#oggetto {
+		width: fit-content;
+		height: max-content;
+		left: 100px;
+		top: 100px;
+		position: center center;
+		/* position: absolute; */
+		background-color: yellow;
+	}
+	#oggetto2 {
+		width: 40px;
+		height: 40px;
+		left: 460px;
+		top: 100px;
+		position: absolute;
+		background-color: blue	;
+	}
+
+	
+</style>
+</head>
+<body onload="avviaAnimazione();">
+
+	<div id="schermata_caricamento">
+		<p>Caricamento</p>
+		<img src="/loading/giphy.gif">
+	</div>
+
+<div class="box">
+	<div id = "quadratino">Hello world :)</div>
+	<div id = "oggetto"><button onclick="stop()">Stop</button></div>
+	<div id = "oggetto2"></div>
+</div>
+<!-- <p><button onclick="avviaAnimazione()">Avvia animazione</button></p> -->
+<!-- <p><button onclick="stop()">Stop</button></p> -->
+<!-- <p><button onclick="spostaSx()"><-</button>
+<button onclick="spostaDx()">-></button>
+</p> -->
+
+<script>
+function avviaAnimazione() {
+	quadratino = document.getElementById("quadratino");
+	posizioneX = 0;
+	posizioneY = 0;
+	id = setInterval(animazione, 5);
+	incrementoX = 1;
+	incrementoY = 1;
+	altroIncrementoX = 0;
+	oggetto = document.getElementById("oggetto");
+	oggetto.style.left = 230 + "px";
+	oggetto.style.top = 230 + "px";
+	box = document.querySelector('.box');
+	width = box.offsetWidth;
+	height = box.offsetHeight;
+	scritta = document.querySelector('#quadratino');
+	widthScritta = quadratino.offsetWidth;
+	heightScritta = quadratino.offsetHeight;
+}
+
+function aggiustaIncremento(x,y,lato) { //RESO PORZIONE DI CODICE UNIVERSALE
+	// Rimbalzo sull'oggetto
+	//lato sinistro
+	if ( (posizioneX == x - lato) && ((posizioneY >= y) && (posizioneY <= y + lato)) ) {
+		incrementoX = -1;
+	} //lato destro
+	else if ( (posizioneX == x + lato) && ((posizioneY >= y) && (posizioneY <= y + lato)) ) {
+		incrementoX = 1;
+	}
+	else if ( (posizioneY == y - lato) && ((posizioneX >= x) && (posizioneX <= x + lato)) ) {
+		incrementoY = -1;
+	} //lato destro 
+	else if ( (posizioneY == y + lato) && ((posizioneX >= x) && (posizioneX <= x + lato)) ) {
+		incrementoY = 1;
+	}
+}
+
+function animazione() {
+	// Rimbalzo sul contenitore
+	if (posizioneX == width - widthScritta) { // Bordo destro
+		incrementoX = -1;
+	} else if (posizioneX == 0) { // Bordo sinistro
+		incrementoX = 1;
+	}
+	if (posizioneY == height - heightScritta) { // Bordo basso
+		incrementoY = -1;
+	} else if (posizioneY == 0) { // Bordo altro
+		incrementoY = 1;
+	}
+
+	aggiustaIncremento(230,230,40);
+	aggiustaIncremento(460,100,40);
+
+	posizioneX = posizioneX + incrementoX + altroIncrementoX;
+	altroIncrementoX = 0;
+	quadratino.style.left = posizioneX + "px";
+	posizioneY = posizioneY + incrementoY;
+	quadratino.style.top = posizioneY + "px";
+}
+
+function spostaSx() {
+	altroIncrementoX = -20;
+}
+
+function spostaDx() {
+	altroIncrementoX = 20;
+}
+
+function stop() {
+	clearInterval(id);
+	
+}
+
+</script>
+
+
+<!-- script caricamento-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js">
+	$("#schermata_caricamento").fadeOut(500);
+</script>
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
